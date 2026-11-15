@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>What’s Your Sole Colour?</title>
+<style>
+:root{--bg:#EE7239;--card:#FFF9EC;--ink:#1d1d1b;--muted:#5b5b57;--accent:#2f8f84;--yellow:#FADF4F;--line:#e6dcc4;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#7a3414;--card:#2a2623;--ink:#f6efe2;--muted:#b9b0a0;--accent:#55C1B3;--line:#433d37}}
+:root[data-theme="dark"]{--bg:#7a3414;--card:#2a2623;--ink:#f6efe2;--muted:#b9b0a0;--accent:#55C1B3;--line:#433d37}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Trebuchet MS",system-ui,sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center}
+header{width:100%;background:var(--yellow);color:#1d1d1b;padding:18px 20px;text-align:center}
+header h1{margin:0;font-size:clamp(1.3rem,5vw,2rem)}
+header p{margin:4px 0 0;font-style:italic;font-size:.9rem}
+.stripes{display:flex;width:100%;height:10px}
+.stripes i{flex:1}
+main{width:100%;max-width:520px;padding:20px 16px 40px}
+.card{background:var(--card);border-radius:20px;padding:24px;box-shadow:0 8px 24px rgba(0,0,0,.18)}
+h2{margin:0 0 6px;font-size:1.35rem}
+.sub{color:var(--muted);margin:0 0 18px}
+.progress{height:8px;background:var(--line);border-radius:8px;margin-bottom:18px;overflow:hidden}
+.progress b{display:block;height:100%;background:var(--accent);width:0;transition:width .3s}
+.opt{display:block;width:100%;text-align:left;font:inherit;color:var(--ink);background:transparent;border:2px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:10px;cursor:pointer}
+.opt:hover,.opt:focus-visible{border-color:var(--accent);outline:none}
+.btn{font:inherit;font-weight:bold;background:var(--accent);color:#fff;border:0;border-radius:999px;padding:14px 26px;cursor:pointer;width:100%;margin-top:8px}
+.btn.alt{background:transparent;color:var(--ink);border:2px solid var(--line)}
+.swatches{display:flex;gap:8px;margin:16px 0}
+.swatches span{flex:1;height:44px;border-radius:10px}
+.hero{border-radius:16px;padding:22px 16px;text-align:center;color:#fff;margin-bottom:16px}
+.hero small{opacity:.9;letter-spacing:.08em;text-transform:uppercase}
+.hero h2{font-size:1.8rem;margin:6px 0}
+.shoe{font-size:3rem;margin:4px 0}
+.traits{padding-left:18px;color:var(--muted)}
+.coupon{background:#fff;color:#111;border-radius:12px;padding:14px;text-align:center;margin:16px 0;border:2px dashed #999}
+.coupon p{margin:0 0 8px;font-size:.85rem}
+.bars{display:flex;justify-content:center;height:56px;gap:1px}
+.bars i{display:block;background:#111;height:100%}
+.code{font-family:monospace;letter-spacing:.15em;font-weight:bold;margin-top:6px}
+.note{font-size:.75rem;color:var(--muted);text-align:center;margin-top:14px}
+.tools{display:flex;justify-content:space-around;text-align:center;font-size:1.9rem;margin:14px 0 4px}
+.tools small{display:block;font-size:.65rem;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+.stitch{outline:2px dashed rgba(255,255,255,.75);outline-offset:-8px}
+.spec{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+.spec div{border:1px solid var(--line);border-radius:10px;padding:8px 10px}
+.spec small{display:block;color:var(--muted);font-size:.68rem;text-transform:uppercase;letter-spacing:.06em}
+.motto{text-align:center;font-style:italic;color:var(--muted);margin:0 0 10px}
+.brand{width:100%;display:flex;align-items:center;justify-content:center;gap:10px;background:var(--card);color:var(--ink);padding:10px 16px;border-bottom:1px solid var(--line)}
+.brand svg{width:34px;height:34px;color:var(--accent);flex:none}
+.brand b{display:block;font-size:1.05rem;letter-spacing:.04em;text-transform:uppercase;line-height:1.1}
+.brand small{display:block;color:var(--muted);font-size:.7rem;letter-spacing:.08em}
+a.btn{display:block;text-align:center;text-decoration:none}
+.visit{width:calc(100% - 32px);max-width:488px;margin-bottom:40px;background:var(--card);border-radius:20px;padding:18px 22px;margin-top:16px;font-size:.88rem;color:var(--muted);line-height:1.5}
+.visit h3{margin:0 0 6px;color:var(--ink);font-size:1rem}
+.visit a{color:var(--accent);font-weight:bold}
+.fact{border-left:5px solid var(--accent);background:var(--line);border-radius:0 12px 12px 0;padding:10px 14px;margin:14px 0}
+.fact small{display:block;color:var(--muted);font-size:.68rem;text-transform:uppercase;letter-spacing:.06em}
+.fact p{margin:4px 0 0;font-size:.92rem}
+.tl{display:flex;gap:6px;margin:12px 0}
+.tl div{flex:1;font-size:.72rem;color:var(--muted);border-top:3px solid var(--accent);padding-top:6px}
+.tl b{display:block;color:var(--ink);font-size:.95rem}
+.brand img.logo{height:40px;width:auto;display:block}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .brand img.logo{filter:invert(1)}}
+:root[data-theme="dark"] .brand img.logo{filter:invert(1)}
+.hidden{display:none}
+.toast{position:fixed;bottom:calc(20px + env(safe-area-inset-bottom,0px));background:#111;color:#fff;padding:10px 18px;border-radius:999px;font-size:.85rem}
+</style>
+</head>
+<body>
+<div class="brand" id="logo"><img class="logo" alt="Shoemakers Museum" src="data:image/png;base64,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"></div>
+<header><h1>What’s Your Sole Colour?</h1><p>Cut · Stitch · Sole — the Colour Personality Test · SM Café</p></header>
+<div class="stripes"><i style="background:#55C1B3"></i><i style="background:#E6BFD8"></i><i style="background:#A7D0DE"></i><i style="background:#A3A8BC"></i><i style="background:#E44B52"></i><i style="background:#FADF4F"></i></div>
+<main>
+  <section class="card" id="start">
+    <h2>Find your Sole Colour 👟</h2>
+    <p class="sub">Every great pair starts with a pattern, a last and a pair of skilled hands. Answer 6 vibe-check questions, no overthinking, to find your Sole Colour and unlock a single-day museum entry discount.</p>
+    <div class="tools"><div>✂️<small>Cut</small></div><div>📏<small>Measure</small></div><div>🧵<small>Stitch</small></div><div>🔨<small>Finish</small></div></div>
+    <div class="swatches"><span style="background:#E4604F"></span><span style="background:#1F5A66"></span><span style="background:#F3B8CB"></span><span style="background:#C9A06A"></span></div>
+    <button class="btn" id="go">Start the test</button>
+    <p class="note">Prototype for testing only · discount codes are not live.</p>
+  </section>
+
+  <section class="card hidden" id="quiz">
+    <div class="progress"><b id="bar"></b></div>
+    <h2 id="q"></h2>
+    <p class="sub" id="qn"></p>
+    <div id="opts"></div>
+  </section>
+
+  <section class="card hidden" id="result"></section>
+</main>
+<div class="visit"><h3>Visit Shoemakers Museum</h3>Find us at the entrance to Clarks Village, Street, Somerset (BA16 0BQ). Museum, café and shop are open Tuesday to Sunday, 10am–4pm. The café welcomes drop-ins, no museum ticket needed. Explore over 100,000 objects, from fossils to factory machines. <a href="https://shoemakersmuseum.org.uk/" target="_blank" rel="noopener">shoemakersmuseum.org.uk</a></div>
+<div class="toast hidden" id="toast"></div>
+
+<script>
+var R={
+coral:{name:"Coral Red",title:"The Bold Trailblazer",c:"#E4604F",emoji:"🔥",code:"SOLECORAL20",traits:["Walks in first, thinks later","Loves a statement look","Always the one planning the group trip"]},
+teal:{name:"Deep Teal",title:"The Timeless Craft Icon",c:"#1F5A66",emoji:"🥾",code:"SOLETEAL20",traits:["Appreciates things made well","Classic with a quiet twist","Vintage finds are your love language"]},
+pink:{name:"Pastel Pink",title:"The Soft-Power Dreamer",c:"#E58FAE",emoji:"🌸",code:"SOLEPINK20",traits:["Gentle, creative, and sharp-eyed","Your camera roll is a mood board","Kind, but never a pushover"]},
+tan:{name:"Warm Tan",title:"The Easygoing Explorer",c:"#B98A4E",emoji:"🧭",code:"SOLETAN20",traits:["Comfort first, style follows","Curious about everything","Best conversations happen with you"]}};
+var Q=[
+{q:"The group chat is dead. What’s your move?",a:[["Drop a spicy take to start the chaos 🔥","coral"],["Share a niche find nobody asked for (but everyone needed)","teal"],["Send a moodboard or a perfectly timed meme","pink"],["Plan a hangout. Snacks are on me","tan"]]},
+{q:"You walk into a party. What’s your main character energy?",a:[["Big entrance, obviously","coral"],["Find one person for a proper deep chat","teal"],["Scan the room and compliment everyone’s fit","pink"],["Straight to the snacks, then vibe","tan"]]},
+{q:"Your friends would say you’re giving…",a:[["“No thoughts, just vibes, let’s go”","coral"],["“Old soul, lowkey wise”","teal"],["“Soft launch, sharp taste”","pink"],["“Comfort friend, certified chill”","tan"]]},
+{q:"Be honest: what’s your biggest green flag?",a:[["I say yes to every plot twist","coral"],["I show up and I’m consistent","teal"],["I notice the little things","pink"],["Zero drama, all good vibes","tan"]]},
+{q:"Your ideal weekend is giving…",a:[["A spontaneous side quest","coral"],["A thrift haul and a museum wander","teal"],["Cosy café, playlist and sketchbook","pink"],["A long walk, no plan, no notes","tan"]]},
+{q:"Pick your IG story caption:",a:[["“No notes, only plot twists”","coral"],["“Built different. Built to last.”","teal"],["“Soft launch, loud style”","pink"],["“Slow days, good soles”","tan"]]}];
+var Qold=[
+{q:"Your perfect Saturday?",a:[["Trying something I’ve never done","coral"],["Browsing a museum or antique shop","teal"],["Café, playlist, and sketchbook","pink"],["A long walk with no plan","tan"]]},
+{q:"Which tool would you grab in a shoemaker’s workshop?",a:[["🔨 The hammer — let’s make some noise","coral"],["📌 The awl — precision is everything","teal"],["🧵 Needle and waxed thread","pink"],["👞 The wooden last — it all starts here","tan"]]},
+{q:"Your friends would say you are…",a:[["The spark","coral"],["The reliable one","teal"],["The creative one","pink"],["The chilled one","tan"]]},
+{q:"Pick your leather:",a:[["Glossy patent that turns heads","coral"],["Rich suede with a story to tell","teal"],["Soft pastel nubuck","pink"],["Natural veg-tan that ages beautifully","tan"]]},
+{q:"Which step of making a shoe would you love most?",a:[["Sketching a daring new design","coral"],["Hand-stitching the upper","teal"],["Choosing the colours and finishes","pink"],["Wearing the finished pair for a long walk","tan"]]}];
+var C={
+coral:{last:"Pointed-toe last",leather:"Glossy patent",stitch:"Contrast topstitch",tool:"Hammer",motto:"Cut it bold, finish it fast."},
+teal:{last:"Classic round last",leather:"Hand-finished suede",stitch:"Hand-sewn welt",tool:"Awl",motto:"Measure twice, stitch once."},
+pink:{last:"Soft almond last",leather:"Pastel nubuck",stitch:"Tonal blind stitch",tool:"Waxed thread",motto:"Soft hands, sharp eye."},
+tan:{last:"Roomy comfort last",leather:"Natural veg-tan",stitch:"Stout welted stitch",tool:"Wooden last",motto:"Made to be walked in."}};
+var F={
+coral:"Clarks began as a scrappy side project: James Clark turned leftover sheepskin offcuts from his brother Cyrus’s tannery into slippers. The company was founded in 1825 in Street, Somerset, and it’s still based there.",
+teal:"Nathan Clark’s Desert Boot launched in 1950. He was inspired by simple suede boots he came across while serving in the Second World War, and it became a global icon.",
+pink:"The Wallabee has been worn across subcultures, from Ivy League students to hip hop artists. Clarks style has always travelled well beyond Somerset.",
+tan:"The Desert Boot reached cult status in Jamaica, and the Desert Nomad was popular in New Zealand for around a decade. Comfort really does travel."};
+var i=0,score={};
+function $(id){return document.getElementById(id)}
+function show(id){["start","quiz","result"].forEach(function(s){$(s).classList.toggle("hidden",s!==id)})}
+function ask(){
+  var x=Q[i];$("q").textContent=x.q;$("qn").textContent="Question "+(i+1)+" of "+Q.length;
+  $("bar").style.width=(i/Q.length*100)+"%";
+  $("opts").innerHTML="";
+  x.a.forEach(function(o){var b=document.createElement("button");b.className="opt";b.textContent=o[0];
+    b.onclick=function(){score[o[1]]=(score[o[1]]||0)+1;i++;i<Q.length?ask():finish()};$("opts").appendChild(b)});
+}
+function barcode(code){
+  var h=0,s="";for(var k=0;k<code.length;k++)h=(h*31+code.charCodeAt(k))>>>0;
+  var out="";for(var n=0;n<48;n++){h=(h*1103515245+12345)>>>0;out+='<i style="width:'+(1+(h>>16)%3)+'px"></i><i style="width:'+(1+(h>>20)%2)+'px;background:transparent"></i>'}
+  return out;
+}
+function finish(){
+  var best="coral",m=-1;for(var k in R){if((score[k]||0)>m){m=score[k]||0;best=k}}
+  var r=R[best],c=C[best],f=F[best];
+  $("result").innerHTML='<div class="hero stitch" style="background:'+r.c+'"><small>You are</small><h2>'+r.name+'!</h2><div class="shoe">'+r.emoji+'</div><div>'+r.title+'</div></div>'+
+  '<p class="motto">“'+c.motto+'”</p><div class="spec"><div><small>Your last</small><b>'+c.last+'</b></div><div><small>Your leather</small><b>'+c.leather+'</b></div><div><small>Your stitch</small><b>'+c.stitch+'</b></div><div><small>Your tool</small><b>'+c.tool+'</b></div></div>'+
+  '<ul class="traits">'+r.traits.map(function(t){return"<li>"+t+"</li>"}).join("")+'</ul>'+
+  '<div class="fact"><small>Clarks story · '+r.name+'</small><p>'+f+'</p></div>'+
+  '<div class="tl"><div><b>1825</b>Clarks founded in Street</div><div><b>1950</b>Desert Boot launches</div><div><b>2025</b>Clarks turns 200</div></div>'+
+  '<div class="coupon"><p>Show this at the SM Café till for your single-day museum entry discount</p><div class="bars">'+barcode(r.code)+'</div><div class="code">'+r.code+'</div></div>'+
+  '<button class="btn" id="share">Share to IG Story</button><a class="btn alt" href="https://shoemakersmuseum.org.uk/visit/" target="_blank" rel="noopener">Plan your museum visit</a><button class="btn alt" id="again">Retake the test</button>'+
+  '<p class="note">Prototype for testing only · discount codes are not live.</p>';
+  $("share").onclick=function(){
+    var t="I’m "+r.name+" — "+r.title+"! What’s your Sole Colour?";
+    if(navigator.share){navigator.share({title:"What’s Your Sole Colour?",text:t,url:location.href}).catch(function(){})}
+    else{try{navigator.clipboard.writeText(t+" "+location.href);toast("Copied! Paste it into your story.")}catch(e){toast("Sharing is not available here.")}}
+  };
+  $("again").onclick=function(){i=0;score={};show("start")};
+  show("result");
+}
+function toast(t){var e=$("toast");e.textContent=t;e.classList.remove("hidden");setTimeout(function(){e.classList.add("hidden")},2200)}
+$("go").onclick=function(){i=0;score={};show("quiz");ask()};
+</script>
+</body>
+</html>
